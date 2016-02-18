@@ -30,7 +30,7 @@ function! s:FormatBuffer()
         \ nobuflisted
         \ noswapfile
   if exists(':AirlineRefresh')
-    AirlineRefresh
+     silent! AirlineRefresh
   endif
   redraw!
 endfunction
@@ -80,6 +80,10 @@ function! s:ExplorerWrapper(arg)
 endfunction
 
 let g:loaded_netrwPlugin = 'disable'
-au BufEnter * silent call s:RangerChooser(expand('<amatch>'), 0)
+
+augroup RangerExplorer
+  au!
+  au BufEnter * silent call s:RangerChooser(expand('<amatch>'), 0)
+augroup END
 
 command! -nargs=? -bar -complete=dir Explore silent call s:ExplorerWrapper('<args>')
