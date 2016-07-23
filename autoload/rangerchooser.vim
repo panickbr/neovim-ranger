@@ -83,6 +83,7 @@ function! rangerchooser#VanillaRanger()
 
   exec 'edit ' . fnameescape(name)
 
+  doautocmd BufReadPost
   redraw!
 
   " exec 'silent !ranger --choosefile=' . s:fullfilename
