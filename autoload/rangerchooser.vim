@@ -14,14 +14,24 @@ function! rangerchooser#FileHandler()
   if filereadable(s:temp)
     let filetoedit = system('cat ' . s:temp)
   else
-    Startify
+    if exists(':Startify')
+      silent! Startify
+    endif
   endif
 
   if filereadable(filetoedit)
     exec 'edit! ' . fnameescape(filetoedit)
     exec 'bd!' . buftoclose
   else
-    exec 'bp'
+    " Get number of buffers
+    " stolem from: http://superuser.com/a/345593
+    "
+    " Fixes bug with 'No listed buffer'
+    " when opening a folder direct from command line
+    let bufnuns = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+    if bufnuns >= 1
+      exec 'bp'
+    endif
   endif
 
   redraw!
