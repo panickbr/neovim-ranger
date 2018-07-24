@@ -65,6 +65,7 @@ function! rangerchooser#RangerChooser(dirname, commanded)
 
     if exists(':terminal')
       call termopen('ranger --choosefile=' . s:fullfilename, s:callbacks) | startinsert | call rangerchooser#FormatBuffer()
+      doau TermOpen
     else
       call rangerchooser#VanillaRanger()
     endif
